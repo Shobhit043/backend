@@ -1,0 +1,13 @@
+{
+  "name": "express-static-demo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A minimal Express static-file serving example",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
