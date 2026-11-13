@@ -98,31 +98,40 @@
     <button type="submit">Generate Short URL</button>
   </form>
 
-  <% if (shortID) { %>
-    <div class="result">
-      <h2>Short URL Created!</h2>
-      <p><strong>Short ID:</strong> <%= shortID %></p>
-      <p><strong>Redirect URL:</strong> <%= redirectURL %></p>
-      <p><strong>Click Count:</strong> <%= clickCount || 0 %></p>
-    </div>
+    <% if (shortID) { %>
+      <div class="result">
+        <h2>Short URL Created!</h2>
+        <p><strong>Short ID:</strong> <%= shortID %></p>
+        <p><strong>Redirect URL:</strong> <%= redirectURL %></p>
+        <p><strong>Click Count:</strong> <%= clickCount || 0 %></p>
+      </div>
+    <% } %>
 
-    <table>
-      <thead>
-        <tr>
-          <th>Short ID</th>
-          <th>Redirect URL</th>
-          <th>Click Count</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><%= shortID %></td>
-          <td><%= redirectURL %></td>
-          <td><%= clickCount || 0 %></td>
-        </tr>
-      </tbody>
-    </table>
-  <% } %>
-</body>
-
+    <% if (urls && urls.length > 0) { %>
+      <table>
+        <thead>
+          <tr>
+            <th>Short ID</th>
+            <th>Redirect URL</th>
+            <th>Click Count</th>
+            <% if (isAdmin) { %><th>Owner</th><% } %>
+          </tr>
+        </thead>
+        <tbody>
+          <% urls.forEach(function(url) { %>
+            <tr>
+              <td><%= url.shortID %></td>
+              <td><%= url.redirectURL %></td>
+              <td><%= (url.visitHistory || []).length %></td>
+              <% if (isAdmin) { %>
+                <td><%= (url.owner && url.owner.name) ? url.owner.name : 'Unknown' %></td>
+              <% } %>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    <% } else if (!shortID) { %>
+      <p style="margin-top:30px; color:#666;">No URLs found.</p>
+    <% } %>
+  </body>
 </html>

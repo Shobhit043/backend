@@ -26,7 +26,7 @@ async function handleUserLogin(req, res) {
       error: "Invalid username or password"
     });
   }
-  console.log(user);
+  //console.log(user);
   token = setUser(user);
   res.cookie('uuid', token);
   res.redirect('/');
@@ -35,10 +35,13 @@ async function handleUserLogin(req, res) {
 async function handleUserSignup(req, res) {
   const {name, email, password} = req.body;
   try {
+    const userCount = await User.countDocuments({});
+    const role = 'normal';
     await User.create({
       name: name,
       email: email,
-      password: password
+      password: password,
+      role: role
     });
   }
   catch (error) {

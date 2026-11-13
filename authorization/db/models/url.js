@@ -11,7 +11,12 @@ const urlSchema = new mongoose.Schema(
           type: Number
         }
       }
-    ]
+    ],
+    owner: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: false
+    }
   },
   { timeStamp: true }
 );
