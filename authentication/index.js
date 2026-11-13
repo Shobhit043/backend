@@ -4,7 +4,8 @@ const {router} = require('./routes/url');
 const {staticRouter} = require('./routes/static')
 const {userRouter} = require('./routes/user')
 const path = require('path');
-
+const {restrictToLoggedUserOnly} = require('./middlewares/auth')
+const cookieParser = require('cookie-parser')
 const port = 8000;
 const urlDB = 'mongodb://localhost:27017/db';
 
@@ -21,10 +22,10 @@ connectToDB(urlDB).then(() => {
   // middleware
   app.use(express.json());
   app.use(express.urlencoded({extended: true}));
-
+  app.use(cookieParser());
   // routes
-  app.use('/', staticRouter);
-  app.use('/url', router);
+  app.use('/', restrictToLoggedUserOnly, staticRouter);
+  app.use('/url', restrictToLoggedUserOnly, router);
   app.use('/user', userRouter);
   app.listen(port, () => {
     console.log(`server started at http://localhost:${port}`);

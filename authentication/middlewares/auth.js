@@ -1,6 +1,21 @@
+const {getUser} = require('../utils/auth');
+
 async function restrictToLoggedUserOnly(req, res, next) {
-  const userUid = req.cookies.uid;
-  if (!userUid) {
-    return res.redirect('/login');
+  if (req.path.startsWith('/user')) {
+    return next();
   }
+  const userUid = req.cookies?.uuid;
+  if (!userUid) {
+    return res.redirect('/user/login');
+  }
+  const user = getUser(userUid);
+  if (!user) {
+    return res.redirect('/user/login');
+  }
+  req.user = user;
+  next();
+}
+
+module.exports = {
+  restrictToLoggedUserOnly
 }
