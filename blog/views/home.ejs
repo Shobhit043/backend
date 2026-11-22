@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include('./partials/head.ejs') -%>
+    <title>
+      Homepage
+    </title>
+</head>
+
+<body>
+  <%- include('./partials/navbar.ejs')-%>
+    <main class="container py-4">
+      <h1 class="h3 mb-3">Recent Blogs</h1>
+
+      <% if (typeof blogs !== 'undefined' && blogs.length > 0) { %>
+        <% blogs.forEach(function (blog) { %>
+          <article class="card mb-3">
+            <% if (blog.coverImageURL) { %>
+              <img src="<%= blog.coverImageURL %>" class="card-img-top" alt="<%= blog.title %>">
+            <% } %>
+            <div class="card-body">
+              <h2 class="h5 card-title"><%= blog.title %></h2>
+              <p class="card-text">
+                <%= blog.content.length > 200 ? blog.content.substring(0, 200) + '...' : blog.content %>
+              </p>
+              <p class="card-text mb-0">
+                <small class="text-body-secondary">
+                  By <%= blog.createdBy ? blog.createdBy.name : 'Unknown' %>
+                  &middot;
+                  <%= blog.createdAt.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) %>
+                </small>
+              </p>
+            </div>
+          </article>
+        <% }) %>
+      <% } else { %>
+        <p class="text-body-secondary">
+          No blogs yet. <a href="/blog/add-blog">Create your first blog</a>.
+        </p>
+      <% } %>
+    </main>
+
+    <%- include('./partials/scripts.ejs') -%>
+</body>
+
+</html>
