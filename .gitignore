@@ -1,1 +1,4 @@
 node_modules/
+graphify*
+.env
+blog/public/uploads/
