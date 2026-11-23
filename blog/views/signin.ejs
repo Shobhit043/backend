@@ -1,33 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <%- include('./partials/head.ejs') -%>
     <title>
-      Signin
+      Sign in
     </title>
 </head>
 
 <body>
   <%- include('./partials/navbar.ejs')-%>
-    <div class="container">
-      <% if (error) { %>
+
+  <main class="container auth-wrapper d-flex align-items-center justify-content-center py-5">
+    <div class="w-100" style="max-width: 420px;">
+      <div class="text-center mb-4">
+        <h1 class="page-title h3 mb-1">Welcome back</h1>
+        <p class="page-subtitle mb-0">Sign in to continue</p>
+      </div>
+
+      <% if (typeof error !== 'undefined' && error) { %>
         <div class="alert alert-danger" role="alert"><%= error %></div>
       <% } %>
-      <form action="/user/signin" method="post">
-        <div class="mb-3">
-          <label for="email" class="form-label">email</label>
-          <input type="email" class="form-control" id="email" name="email" required>
-        </div>
-        <div class="mb-3">
-          <label for="password" class="form-label">password</label>
-          <input type="password" class="form-control" id="password" name="password" required>
-        </div>
-        <button type="submit" class="btn btn-primary">signin</button>
-      </form>
 
+      <div class="form-card p-4 p-md-5">
+        <form action="/user/signin" method="post">
+          <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="email" name="email" placeholder="you@example.com" required>
+          </div>
+          <div class="mb-4">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" class="form-control" id="password" name="password" placeholder="Your password" required>
+          </div>
+          <button type="submit" class="btn btn-primary w-100 py-2">Sign in</button>
+        </form>
+      </div>
+
+      <p class="text-center text-muted small mt-3 mb-0">
+        Don't have an account? <a href="/user/signup" class="text-decoration-none">Sign up</a>
+      </p>
     </div>
-    <%- include('./partials/scripts.ejs') -%>
-</body>
+  </main>
 
+  <%- include('./partials/scripts.ejs') -%>
+</body>
 </html>
