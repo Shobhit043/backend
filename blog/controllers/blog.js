@@ -28,7 +28,20 @@ const createBlog = async (req, res) => {
   await blog.save();
   res.redirect('/');
 };
+
+const mgetBlogDetailPage = async (req, res) => {
+  try {
+    const blog = await Blog.findById(req.params.id).populate('createdBy', 'name email');
+    if (!blog) {
+      return res.status(404).send('resource not found');
+    }
+    return res.status(200).render('blog-show', { blog });
+  } catch (error) {
+    return res.status(500).send('internal server error');
+  }
+};
 module.exports = {
   getBlogPage,
   createBlog,
+  mgetBlogDetailPage,
 };
