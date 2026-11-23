@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('./partials/head.ejs') -%>
+    <title>
+      <%= blog.title %>
+    </title>
+</head>
+
+<body>
+  <%- include('./partials/navbar.ejs')-%>
+
+  <main class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-12 col-lg-9 col-xl-8">
+        <a href="/" class="small text-decoration-none text-muted d-inline-flex align-items-center mb-3">
+          &larr;&nbsp;Back to all blogs
+        </a>
+
+        <h1 class="article-title display-6 mb-3"><%= blog.title %></h1>
+
+        <p class="text-muted mb-4">
+          By <span class="fw-semibold text-body"><%= blog.createdBy ? blog.createdBy.name : 'Unknown' %></span>
+          &middot;
+          <%= blog.createdAt ? blog.createdAt.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : '' %>
+        </p>
+
+        <img src="<%= blog.coverImageURL || '/images/placeholder.svg' %>" class="article-cover w-100 mb-4"
+          alt="<%= blog.title %>">
+
+        <article class="blog-content"><%= blog.content %></article>
+
+        <hr class="my-4">
+        <a href="/" class="btn btn-outline-secondary">&larr; Back to Home</a>
+      </div>
+    </div>
+  </main>
+
+  <%- include('./partials/scripts.ejs') -%>
+</body>
+</html>
