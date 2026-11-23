@@ -33,7 +33,8 @@ const upload = multer({
 });
 
 const uploadCoverImage = (req, res, next) => {
-  upload.single('coverImage')(req, res, (err) => {
+  const multerMiddleware = upload.single('coverImage');
+  return multerMiddleware(req, res, (err) => {
     if (err) {
       const message =
         err.code === 'LIMIT_FILE_SIZE' ? 'Image is too large (max 3 MB).' : err.message;
